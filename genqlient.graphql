@@ -1,0 +1,183 @@
+mutation AddUserToGroup($user: String!, $group: Int!) {
+  addUserToGroup(userId: $user, groupId: $group) {
+    ok
+  }
+}
+
+mutation CreateGroup($name: String!) {
+  createGroup(name: $name) {
+    id
+    displayName
+  }
+}
+
+mutation CreateGroupAttribute($name: String!, $attributeType: AttributeType!, $isList: Boolean!, $isVisible: Boolean!) {
+    addGroupAttribute(name: $name, attributeType: $attributeType, isList: $isList, isVisible: $isVisible, isEditable: false) {
+        ok
+    }
+}
+
+mutation CreateUser($user: CreateUserInput!) {
+  createUser(user: $user) {
+    id
+    creationDate
+  }
+}
+
+
+mutation CreateUserAttribute($name: String!, $attributeType: AttributeType!, $isList: Boolean!, $isVisible: Boolean!, $isEditable: Boolean!) {
+    addUserAttribute(name: $name, attributeType: $attributeType, isList: $isList, isVisible: $isVisible, isEditable: $isEditable) {
+        ok
+    }
+}
+
+mutation DeleteGroupQuery($groupId: Int!) {
+  deleteGroup(groupId: $groupId) {
+    ok
+  }
+}
+
+
+mutation DeleteGroupAttributeQuery($name: String!) {
+    deleteGroupAttribute(name: $name) {
+        ok
+    }
+}
+
+mutation DeleteUserQuery($user: String!) {
+  deleteUser(userId: $user) {
+    ok
+  }
+}
+
+
+mutation DeleteUserAttributeQuery($name: String!) {
+    deleteUserAttribute(name: $name) {
+        ok
+    }
+}
+
+query GetGroupAttributesSchema {
+  schema {
+    groupSchema {
+      attributes {
+        name
+        attributeType
+        isList
+        isVisible
+        isHardcoded
+      }
+    }
+  }
+}
+
+
+query GetGroupDetails($id: Int!) {
+  group(groupId: $id) {
+    id
+    displayName
+    creationDate
+    uuid
+    users {
+      id
+      email
+      displayName
+    }
+  }
+}
+
+query GetGroupDetailsByName($name: String!) {
+  groupByName(groupName: $name) {
+    id
+    displayName
+    creationDate
+    uuid
+    users {
+      id
+      email
+      displayName
+    }
+  }
+}
+
+
+query GetGroupList {
+  groups {
+    id
+    displayName
+    creationDate
+    users {
+        id
+        email
+        displayName
+    }
+  }
+}
+
+
+query GetUserAttributesSchema {
+  schema {
+    userSchema {
+      attributes {
+        name
+        attributeType
+        isList
+        isVisible
+        isEditable
+        isHardcoded
+      }
+    }
+  }
+}
+
+
+query GetUserDetails($id: String!) {
+  user(userId: $id) {
+    id
+    email
+    displayName
+    firstName
+    lastName
+    avatar
+    creationDate
+    uuid
+    groups {
+      id
+      displayName
+    }
+  }
+}
+
+
+query ListUsersQuery($filters: RequestFilter) {
+  users(filters: $filters) {
+    id
+    email
+    displayName
+    firstName
+    lastName
+    creationDate
+  }
+}
+
+query ListUserNames($filters: RequestFilter) {
+  users(filters: $filters) {
+    id
+    displayName
+  }
+}
+
+
+mutation RemoveUserFromGroup($user: String!, $group: Int!) {
+  removeUserFromGroup(userId: $user, groupId: $group) {
+    ok
+  }
+}
+
+
+mutation UpdateUser($user: UpdateUserInput!) {
+  updateUser(user: $user) {
+    ok
+  }
+}
+
