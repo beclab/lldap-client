@@ -1,11 +1,13 @@
 package main
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/cache/memory"
-	"bytetrade.io/web3os/lldap-client/pkg/client"
-	"bytetrade.io/web3os/lldap-client/pkg/config"
-	"bytetrade.io/web3os/lldap-client/pkg/generated"
 	"context"
+	"github.com/beclab/lldap-client/pkg/generated"
+
+	//"github.com/beclab/lldap-client"
+	"github.com/beclab/lldap-client/pkg/cache/memory"
+	"github.com/beclab/lldap-client/pkg/client"
+	"github.com/beclab/lldap-client/pkg/config"
 	"k8s.io/klog/v2"
 )
 

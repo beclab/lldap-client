@@ -1,7 +1,7 @@
 package transport
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/config"
+	"github.com/beclab/lldap-client/pkg/config"
 	"k8s.io/klog/v2"
 	"net/http"
 )

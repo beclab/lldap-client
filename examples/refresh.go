@@ -1,8 +1,8 @@
 package main
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/auth"
 	"fmt"
+	"github.com/beclab/lldap-client/pkg/auth"
 )
 
 func main() {

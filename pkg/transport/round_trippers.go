@@ -1,10 +1,10 @@
 package transport
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/auth"
-	"bytetrade.io/web3os/lldap-client/pkg/config"
 	"errors"
 	"fmt"
+	"github.com/beclab/lldap-client/pkg/auth"
+	"github.com/beclab/lldap-client/pkg/config"
 	"github.com/dgrijalva/jwt-go"
 	"golang.org/x/oauth2"
 	"k8s.io/klog/v2"
@@ -45,7 +45,7 @@ func (rt *bearerAuthRoundTripper) RoundTrip(req *http.Request) (*http.Response, 
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", rt.cfg.BearerToken))
-	
+
 	return rt.rt.RoundTrip(req)
 }
 

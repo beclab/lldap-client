@@ -1,8 +1,8 @@
 package client
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/generated"
 	"context"
+	"github.com/beclab/lldap-client/pkg/generated"
 )
 
 type UserInterface interface {

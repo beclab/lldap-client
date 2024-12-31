@@ -1,10 +1,10 @@
 package client
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/generated"
 	"context"
 	"errors"
 	"fmt"
+	"github.com/beclab/lldap-client/pkg/generated"
 	"github.com/go-resty/resty/v2"
 	"net/http"
 	"time"

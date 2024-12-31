@@ -1,7 +1,7 @@
 package memory
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/cache"
+	"github.com/beclab/lldap-client/pkg/cache"
 	"k8s.io/klog/v2"
 	"sync"
 	"time"

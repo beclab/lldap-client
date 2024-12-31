@@ -1,4 +1,4 @@
-module bytetrade.io/web3os/lldap-client
+module github.com/beclab/lldap-client
 
 go 1.22
 

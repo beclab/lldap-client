@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/auth"
+	"github.com/beclab/lldap-client/pkg/auth"
 	"k8s.io/klog/v2"
 	"os"
 )

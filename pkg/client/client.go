@@ -1,9 +1,9 @@
 package client
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/config"
-	"bytetrade.io/web3os/lldap-client/pkg/transport"
 	"github.com/Khan/genqlient/graphql"
+	"github.com/beclab/lldap-client/pkg/config"
+	"github.com/beclab/lldap-client/pkg/transport"
 	"net/http"
 )
 

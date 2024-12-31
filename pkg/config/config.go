@@ -1,8 +1,8 @@
 package config
 
 import (
-	"bytetrade.io/web3os/lldap-client/pkg/cache"
-	"bytetrade.io/web3os/lldap-client/pkg/cache/memory"
+	"github.com/beclab/lldap-client/pkg/cache"
+	"github.com/beclab/lldap-client/pkg/cache/memory"
 	"net/http"
 	"time"
 )
