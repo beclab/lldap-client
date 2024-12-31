@@ -1,6 +1,6 @@
 module bytetrade.io/web3os/lldap-client
 
-go 1.22.5
+go 1.22
 
 require (
 	github.com/Khan/genqlient v0.7.0
