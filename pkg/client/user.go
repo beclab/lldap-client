@@ -4,10 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/beclab/lldap-client/pkg/generated"
-	"github.com/go-resty/resty/v2"
 	"net/http"
 	"time"
+
+	"github.com/beclab/lldap-client/pkg/generated"
+	transport2 "github.com/beclab/lldap-client/pkg/transport"
+	"github.com/go-resty/resty/v2"
 )
 
 type users struct {
@@ -78,9 +80,13 @@ func (u *users) ResetPassword(ctx context.Context, username, password string) er
 	}
 	url := fmt.Sprintf("%s/auth/simple/register", u.client.cfg.Host)
 	client := resty.New()
+	transport, err := transport2.New(u.client.cfg)
+	if err != nil {
+		return err
+	}
+	client = client.SetTransport(transport)
 	resp, err := client.SetTimeout(5*time.Second).R().
 		SetHeader("Content-Type", "application/json").
-		SetHeader("Authorization", "Bearer "+u.client.cfg.BearerToken).
 		SetBody(creds).Post(url)
 	if err != nil {
 		return err
