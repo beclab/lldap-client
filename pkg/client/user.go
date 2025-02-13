@@ -96,3 +96,12 @@ func (u *users) ResetPassword(ctx context.Context, username, password string) er
 	}
 	return nil
 }
+
+func (u *users) LoginRecords(ctx context.Context, name string) ([]generated.GetUserLoginRecordsLoginRecordsLoginRecord, error) {
+	var resp *generated.GetUserLoginRecordsResponse
+	resp, err := generated.GetUserLoginRecords(ctx, u.client, name)
+	if err != nil {
+		return nil, err
+	}
+	return resp.LoginRecords, nil
+}

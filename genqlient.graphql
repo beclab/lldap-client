@@ -181,3 +181,13 @@ mutation UpdateUser($user: UpdateUserInput!) {
   }
 }
 
+query GetUserLoginRecords($userId: String!) {
+  loginRecords(userId: $userId) {
+    userId
+    success
+    reason
+    sourceIp
+    userAgent
+    creationDate
+  }
+}

@@ -14,15 +14,8 @@ type TokenCache struct {
 	mu           sync.RWMutex
 }
 
-var (
-	tokenCache *TokenCache
-	once       sync.Once
-)
-
 func New() cache.TokenCacheInterface {
-	once.Do(func() {
-		tokenCache = &TokenCache{}
-	})
+	tokenCache := &TokenCache{}
 	return tokenCache
 }
 

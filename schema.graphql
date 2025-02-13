@@ -58,6 +58,7 @@ type Query {
   groups: [Group!]!
   group(groupId: Int!): Group!
   groupByName(groupName: String!): Group!
+  loginRecords(userId: String!): [LoginRecord!]
   schema: Schema!
 }
 
@@ -177,4 +178,13 @@ type Success {
 schema {
   query: Query
   mutation: Mutation
+}
+
+type LoginRecord {
+    userId: String!
+    success: Boolean!
+    reason: String!
+    sourceIp: String!
+    userAgent: String!
+    creationDate: DateTimeUtc!
 }

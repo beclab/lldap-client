@@ -589,6 +589,46 @@ func (v *GetUserDetailsUserGroupsGroup) GetId() int { return v.Id }
 // GetDisplayName returns GetUserDetailsUserGroupsGroup.DisplayName, and is useful for accessing the field via an interface.
 func (v *GetUserDetailsUserGroupsGroup) GetDisplayName() string { return v.DisplayName }
 
+// GetUserLoginRecordsLoginRecordsLoginRecord includes the requested fields of the GraphQL type LoginRecord.
+type GetUserLoginRecordsLoginRecordsLoginRecord struct {
+	UserId       string    `json:"userId"`
+	Success      bool      `json:"success"`
+	Reason       string    `json:"reason"`
+	SourceIp     string    `json:"sourceIp"`
+	UserAgent    string    `json:"userAgent"`
+	CreationDate time.Time `json:"creationDate"`
+}
+
+// GetUserId returns GetUserLoginRecordsLoginRecordsLoginRecord.UserId, and is useful for accessing the field via an interface.
+func (v *GetUserLoginRecordsLoginRecordsLoginRecord) GetUserId() string { return v.UserId }
+
+// GetSuccess returns GetUserLoginRecordsLoginRecordsLoginRecord.Success, and is useful for accessing the field via an interface.
+func (v *GetUserLoginRecordsLoginRecordsLoginRecord) GetSuccess() bool { return v.Success }
+
+// GetReason returns GetUserLoginRecordsLoginRecordsLoginRecord.Reason, and is useful for accessing the field via an interface.
+func (v *GetUserLoginRecordsLoginRecordsLoginRecord) GetReason() string { return v.Reason }
+
+// GetSourceIp returns GetUserLoginRecordsLoginRecordsLoginRecord.SourceIp, and is useful for accessing the field via an interface.
+func (v *GetUserLoginRecordsLoginRecordsLoginRecord) GetSourceIp() string { return v.SourceIp }
+
+// GetUserAgent returns GetUserLoginRecordsLoginRecordsLoginRecord.UserAgent, and is useful for accessing the field via an interface.
+func (v *GetUserLoginRecordsLoginRecordsLoginRecord) GetUserAgent() string { return v.UserAgent }
+
+// GetCreationDate returns GetUserLoginRecordsLoginRecordsLoginRecord.CreationDate, and is useful for accessing the field via an interface.
+func (v *GetUserLoginRecordsLoginRecordsLoginRecord) GetCreationDate() time.Time {
+	return v.CreationDate
+}
+
+// GetUserLoginRecordsResponse is returned by GetUserLoginRecords on success.
+type GetUserLoginRecordsResponse struct {
+	LoginRecords []GetUserLoginRecordsLoginRecordsLoginRecord `json:"loginRecords"`
+}
+
+// GetLoginRecords returns GetUserLoginRecordsResponse.LoginRecords, and is useful for accessing the field via an interface.
+func (v *GetUserLoginRecordsResponse) GetLoginRecords() []GetUserLoginRecordsLoginRecordsLoginRecord {
+	return v.LoginRecords
+}
+
 // ListUserNamesResponse is returned by ListUserNames on success.
 type ListUserNamesResponse struct {
 	Users []ListUserNamesUsersUser `json:"users"`
@@ -873,6 +913,14 @@ type __GetUserDetailsInput struct {
 
 // GetId returns __GetUserDetailsInput.Id, and is useful for accessing the field via an interface.
 func (v *__GetUserDetailsInput) GetId() string { return v.Id }
+
+// __GetUserLoginRecordsInput is used internally by genqlient
+type __GetUserLoginRecordsInput struct {
+	UserId string `json:"userId"`
+}
+
+// GetUserId returns __GetUserLoginRecordsInput.UserId, and is useful for accessing the field via an interface.
+func (v *__GetUserLoginRecordsInput) GetUserId() string { return v.UserId }
 
 // __ListUserNamesInput is used internally by genqlient
 type __ListUserNamesInput struct {
@@ -1481,6 +1529,46 @@ func GetUserDetails(
 	var err_ error
 
 	var data_ GetUserDetailsResponse
+	resp_ := &graphql.Response{Data: &data_}
+
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
+	)
+
+	return &data_, err_
+}
+
+// The query or mutation executed by GetUserLoginRecords.
+const GetUserLoginRecords_Operation = `
+query GetUserLoginRecords ($userId: String!) {
+	loginRecords(userId: $userId) {
+		userId
+		success
+		reason
+		sourceIp
+		userAgent
+		creationDate
+	}
+}
+`
+
+func GetUserLoginRecords(
+	ctx_ context.Context,
+	client_ graphql.Client,
+	userId string,
+) (*GetUserLoginRecordsResponse, error) {
+	req_ := &graphql.Request{
+		OpName: "GetUserLoginRecords",
+		Query:  GetUserLoginRecords_Operation,
+		Variables: &__GetUserLoginRecordsInput{
+			UserId: userId,
+		},
+	}
+	var err_ error
+
+	var data_ GetUserLoginRecordsResponse
 	resp_ := &graphql.Response{Data: &data_}
 
 	err_ = client_.MakeRequest(
