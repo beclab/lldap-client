@@ -12,6 +12,7 @@ type UserInterface interface {
 	List(ctx context.Context) ([]generated.ListUsersQueryUsersUser, error)
 
 	ResetPassword(ctx context.Context, username, password string) error
+	LoginRecords(ctx context.Context, name string) ([]generated.GetUserLoginRecordsLoginRecordsLoginRecord, error)
 }
 
 type GroupInterface interface {
