@@ -32,7 +32,7 @@ func (c *TokenCache) Get() (string, bool) {
 	defer c.mu.RUnlock()
 	klog.Infof("get token.....111111")
 	if time.Now().After(c.expiresAt) {
-		klog.Infof("token expired....xxxxx")
+		klog.Infof("token expired....xxxxx, expire time: %s", c.expiresAt.String())
 	}
 	if c.token == "" || time.Now().After(c.expiresAt) {
 
