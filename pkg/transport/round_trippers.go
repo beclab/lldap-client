@@ -36,7 +36,7 @@ func (rt *bearerAuthRoundTripper) RoundTrip(req *http.Request) (*http.Response, 
 	req = CloneRequest(req)
 	_, ok := rt.cfg.TokenCache.Get()
 	if !ok {
-		klog.Infof("not found token")
+		klog.Infof("not found valid token")
 		accessToken, err := rt.ensureValidToken()
 		if err != nil {
 			return nil, err
@@ -52,7 +52,8 @@ func (rt *bearerAuthRoundTripper) RoundTrip(req *http.Request) (*http.Response, 
 func (rt *bearerAuthRoundTripper) ensureValidToken() (string, error) {
 	token, err := rt.tryRefreshToken()
 	if err != nil {
-		return "", nil
+		klog.Infof("try refresh token err %v", err)
+		return "", err
 	}
 	return token, nil
 }
@@ -74,12 +75,14 @@ func (rt *bearerAuthRoundTripper) tryRefreshToken() (string, error) {
 		klog.Infof("try login...")
 		resp, err := auth.Login(rt.cfg.Host, rt.cfg.Username, rt.cfg.Password)
 		if err != nil {
+			klog.Infof("auth failed err %v", err)
 			return "", err
 		}
 		retToken, retRefreshToken = resp.Token, resp.RefreshToken
 	}
 	exp, err := getTokenExp(retToken)
 	if err != nil {
+		klog.Infof("get token exp err %v", err)
 		return "", err
 	}
 	if retToken != "" {
