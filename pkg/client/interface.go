@@ -23,4 +23,5 @@ type GroupInterface interface {
 	GetByName(ctx context.Context, name string) (*generated.GetGroupDetailsByNameGroupByNameGroup, error)
 
 	AddUser(ctx context.Context, username string, groupID int) error
+	RemoveUser(ctx context.Context, username string, groupID int) error
 }

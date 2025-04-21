@@ -68,3 +68,11 @@ func (g *groups) AddUser(ctx context.Context, username string, groupID int) erro
 	}
 	return nil
 }
+
+func (g *groups) RemoveUser(ctx context.Context, username string, groupID int) error {
+	_, err := generated.RemoveUserFromGroup(ctx, g.client, username, groupID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
