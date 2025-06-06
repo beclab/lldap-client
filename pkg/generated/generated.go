@@ -113,11 +113,15 @@ func (v *CreateUserAttributeResponse) GetAddUserAttribute() CreateUserAttributeA
 // CreateUserCreateUser includes the requested fields of the GraphQL type User.
 type CreateUserCreateUser struct {
 	Id           string    `json:"id"`
+	UserIndex    int       `json:"userIndex"`
 	CreationDate time.Time `json:"creationDate"`
 }
 
 // GetId returns CreateUserCreateUser.Id, and is useful for accessing the field via an interface.
 func (v *CreateUserCreateUser) GetId() string { return v.Id }
+
+// GetUserIndex returns CreateUserCreateUser.UserIndex, and is useful for accessing the field via an interface.
+func (v *CreateUserCreateUser) GetUserIndex() int { return v.UserIndex }
 
 // GetCreationDate returns CreateUserCreateUser.CreationDate, and is useful for accessing the field via an interface.
 func (v *CreateUserCreateUser) GetCreationDate() time.Time { return v.CreationDate }
@@ -439,12 +443,16 @@ func (v *GetGroupListGroupsGroup) GetUsers() []GetGroupListGroupsGroupUsersUser 
 // GetGroupListGroupsGroupUsersUser includes the requested fields of the GraphQL type User.
 type GetGroupListGroupsGroupUsersUser struct {
 	Id          string `json:"id"`
+	UserIndex   int    `json:"userIndex"`
 	Email       string `json:"email"`
 	DisplayName string `json:"displayName"`
 }
 
 // GetId returns GetGroupListGroupsGroupUsersUser.Id, and is useful for accessing the field via an interface.
 func (v *GetGroupListGroupsGroupUsersUser) GetId() string { return v.Id }
+
+// GetUserIndex returns GetGroupListGroupsGroupUsersUser.UserIndex, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroupUsersUser) GetUserIndex() int { return v.UserIndex }
 
 // GetEmail returns GetGroupListGroupsGroupUsersUser.Email, and is useful for accessing the field via an interface.
 func (v *GetGroupListGroupsGroupUsersUser) GetEmail() string { return v.Email }
@@ -538,6 +546,7 @@ func (v *GetUserDetailsResponse) GetUser() GetUserDetailsUser { return v.User }
 
 // GetUserDetailsUser includes the requested fields of the GraphQL type User.
 type GetUserDetailsUser struct {
+	UserIndex    int       `json:"userIndex"`
 	Id           string    `json:"id"`
 	Email        string    `json:"email"`
 	DisplayName  string    `json:"displayName"`
@@ -549,6 +558,9 @@ type GetUserDetailsUser struct {
 	// The groups to which this user belongs.
 	Groups []GetUserDetailsUserGroupsGroup `json:"groups"`
 }
+
+// GetUserIndex returns GetUserDetailsUser.UserIndex, and is useful for accessing the field via an interface.
+func (v *GetUserDetailsUser) GetUserIndex() int { return v.UserIndex }
 
 // GetId returns GetUserDetailsUser.Id, and is useful for accessing the field via an interface.
 func (v *GetUserDetailsUser) GetId() string { return v.Id }
@@ -659,6 +671,7 @@ func (v *ListUsersQueryResponse) GetUsers() []ListUsersQueryUsersUser { return v
 
 // ListUsersQueryUsersUser includes the requested fields of the GraphQL type User.
 type ListUsersQueryUsersUser struct {
+	UserIndex    int       `json:"userIndex"`
 	Id           string    `json:"id"`
 	Email        string    `json:"email"`
 	DisplayName  string    `json:"displayName"`
@@ -666,6 +679,9 @@ type ListUsersQueryUsersUser struct {
 	LastName     string    `json:"lastName"`
 	CreationDate time.Time `json:"creationDate"`
 }
+
+// GetUserIndex returns ListUsersQueryUsersUser.UserIndex, and is useful for accessing the field via an interface.
+func (v *ListUsersQueryUsersUser) GetUserIndex() int { return v.UserIndex }
 
 // GetId returns ListUsersQueryUsersUser.Id, and is useful for accessing the field via an interface.
 func (v *ListUsersQueryUsersUser) GetId() string { return v.Id }
@@ -1077,6 +1093,7 @@ const CreateUser_Operation = `
 mutation CreateUser ($user: CreateUserInput!) {
 	createUser(user: $user) {
 		id
+		userIndex
 		creationDate
 	}
 }
@@ -1425,6 +1442,7 @@ query GetGroupList {
 		creationDate
 		users {
 			id
+			userIndex
 			email
 			displayName
 		}
@@ -1498,6 +1516,7 @@ func GetUserAttributesSchema(
 const GetUserDetails_Operation = `
 query GetUserDetails ($id: String!) {
 	user(userId: $id) {
+		userIndex
 		id
 		email
 		displayName
@@ -1620,6 +1639,7 @@ func ListUserNames(
 const ListUsersQuery_Operation = `
 query ListUsersQuery ($filters: RequestFilter) {
 	users(filters: $filters) {
+		userIndex
 		id
 		email
 		displayName
