@@ -33,18 +33,24 @@ func (rt *bearerAuthRoundTripper) RoundTrip(req *http.Request) (*http.Response, 
 	if len(req.Header.Get("Authorization")) != 0 {
 		return rt.rt.RoundTrip(req)
 	}
+	if rt.cfg.HasTokenAuth() {
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", rt.cfg.BearerToken))
+		return rt.rt.RoundTrip(req)
+	}
 	req = CloneRequest(req)
-	_, ok := rt.cfg.TokenCache.Get()
+	var accessToken string
+	accessToken, ok := rt.cfg.TokenCache.Get()
 	if !ok {
 		klog.Infof("not found valid token")
-		accessToken, err := rt.ensureValidToken()
+		retToken, err := rt.ensureValidToken()
 		if err != nil {
 			return nil, err
 		}
-		rt.cfg.BearerToken = accessToken
+		accessToken = retToken
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", rt.cfg.BearerToken))
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
 
 	return rt.rt.RoundTrip(req)
 }
@@ -104,7 +110,6 @@ func (rt *bearerAuthRoundTripper) tryRefreshToken() (string, error) {
 			return "", err
 		}
 	}
-	rt.cfg.BearerToken = retToken
 	return retToken, nil
 }
 

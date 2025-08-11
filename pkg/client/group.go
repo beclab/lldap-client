@@ -24,9 +24,9 @@ func (g *groups) Get(ctx context.Context, id int) (*generated.GetGroupDetailsGro
 	return &resp.Group, nil
 }
 
-func (g *groups) Create(ctx context.Context, name string) (*generated.CreateGroupCreateGroup, error) {
+func (g *groups) Create(ctx context.Context, name string, creator string) (*generated.CreateGroupCreateGroup, error) {
 	var resp *generated.CreateGroupResponse
-	resp, err := generated.CreateGroup(ctx, g.client, name)
+	resp, err := generated.CreateGroup(ctx, g.client, name, creator)
 	if err != nil {
 		return nil, err
 	}
@@ -71,6 +71,39 @@ func (g *groups) AddUser(ctx context.Context, username string, groupID int) erro
 
 func (g *groups) RemoveUser(ctx context.Context, username string, groupID int) error {
 	_, err := generated.RemoveUserFromGroup(ctx, g.client, username, groupID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (g *groups) Update(ctx context.Context, updateInput generated.UpdateGroupInput) error {
+	_, err := generated.UpdateGroup(ctx, g.client, updateInput)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (g *groups) CreateAttribute(ctx context.Context, name string,
+	attributeType generated.AttributeType, isList, isVisible bool) error {
+	_, err := generated.CreateGroupAttribute(ctx, g.client, name, attributeType, isList, isVisible)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (g *groups) GetAttributeSchema(ctx context.Context) (*generated.GetGroupAttributesSchemaResponse, error) {
+	res, err := generated.GetGroupAttributesSchema(ctx, g.client)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func (g *groups) DeleteAttribute(ctx context.Context, name string) error {
+	_, err := generated.DeleteGroupAttributeQuery(ctx, g.client, name)
 	if err != nil {
 		return err
 	}
