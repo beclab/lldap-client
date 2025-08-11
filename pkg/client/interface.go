@@ -17,11 +17,15 @@ type UserInterface interface {
 
 type GroupInterface interface {
 	Get(ctx context.Context, id int) (*generated.GetGroupDetailsGroup, error)
-	Create(ctx context.Context, name string) (*generated.CreateGroupCreateGroup, error)
+	Create(ctx context.Context, name string, creator string) (*generated.CreateGroupCreateGroup, error)
 	Delete(ctx context.Context, id int) (*generated.DeleteGroupQueryDeleteGroupSuccess, error)
 	List(ctx context.Context) ([]generated.GetGroupListGroupsGroup, error)
 	GetByName(ctx context.Context, name string) (*generated.GetGroupDetailsByNameGroupByNameGroup, error)
 
 	AddUser(ctx context.Context, username string, groupID int) error
 	RemoveUser(ctx context.Context, username string, groupID int) error
+	Update(ctx context.Context, group generated.UpdateGroupInput) error
+	CreateAttribute(ctx context.Context, name string, attributeType generated.AttributeType, isList, isVisible bool) error
+	GetAttributeSchema(ctx context.Context) (*generated.GetGroupAttributesSchemaResponse, error)
+	DeleteAttribute(ctx context.Context, name string) error
 }
