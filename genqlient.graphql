@@ -4,11 +4,10 @@ mutation AddUserToGroup($user: String!, $group: Int!) {
   }
 }
 
-mutation CreateGroup($name: String!,$creator: String!) {
-  createGroup(name: $name, creator: $creator) {
+mutation CreateGroup($name: String!) {
+  createGroup(name: $name) {
     id
     displayName
-    creator
   }
 }
 
@@ -80,7 +79,6 @@ query GetGroupDetails($id: Int!) {
     displayName
     creationDate
     uuid
-    creator
     attributes {
       name
       value
@@ -105,7 +103,6 @@ query GetGroupDetailsByName($name: String!) {
     displayName
     creationDate
     uuid
-    creator
     attributes {
       name
       value
@@ -129,7 +126,6 @@ query GetGroupList {
   groups {
     id
     displayName
-    creator
     creationDate
     attributes {
       name
@@ -181,7 +177,6 @@ query GetUserDetails($id: String!) {
     groups {
       id
       displayName
-      creator
     }
   }
 }

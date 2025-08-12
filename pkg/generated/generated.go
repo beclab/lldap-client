@@ -76,7 +76,6 @@ func (v *CreateGroupAttributeResponse) GetAddGroupAttribute() CreateGroupAttribu
 type CreateGroupCreateGroup struct {
 	Id          int    `json:"id"`
 	DisplayName string `json:"displayName"`
-	Creator     string `json:"creator"`
 }
 
 // GetId returns CreateGroupCreateGroup.Id, and is useful for accessing the field via an interface.
@@ -84,9 +83,6 @@ func (v *CreateGroupCreateGroup) GetId() int { return v.Id }
 
 // GetDisplayName returns CreateGroupCreateGroup.DisplayName, and is useful for accessing the field via an interface.
 func (v *CreateGroupCreateGroup) GetDisplayName() string { return v.DisplayName }
-
-// GetCreator returns CreateGroupCreateGroup.Creator, and is useful for accessing the field via an interface.
-func (v *CreateGroupCreateGroup) GetCreator() string { return v.Creator }
 
 // CreateGroupResponse is returned by CreateGroup on success.
 type CreateGroupResponse struct {
@@ -325,7 +321,6 @@ type GetGroupDetailsByNameGroupByNameGroup struct {
 	DisplayName  string    `json:"displayName"`
 	CreationDate time.Time `json:"creationDate"`
 	Uuid         string    `json:"uuid"`
-	Creator      string    `json:"creator"`
 	// User-defined attributes.
 	Attributes []GetGroupDetailsByNameGroupByNameGroupAttributesAttributeValue `json:"attributes"`
 	// The groups to which this user belongs.
@@ -343,9 +338,6 @@ func (v *GetGroupDetailsByNameGroupByNameGroup) GetCreationDate() time.Time { re
 
 // GetUuid returns GetGroupDetailsByNameGroupByNameGroup.Uuid, and is useful for accessing the field via an interface.
 func (v *GetGroupDetailsByNameGroupByNameGroup) GetUuid() string { return v.Uuid }
-
-// GetCreator returns GetGroupDetailsByNameGroupByNameGroup.Creator, and is useful for accessing the field via an interface.
-func (v *GetGroupDetailsByNameGroupByNameGroup) GetCreator() string { return v.Creator }
 
 // GetAttributes returns GetGroupDetailsByNameGroupByNameGroup.Attributes, and is useful for accessing the field via an interface.
 func (v *GetGroupDetailsByNameGroupByNameGroup) GetAttributes() []GetGroupDetailsByNameGroupByNameGroupAttributesAttributeValue {
@@ -441,7 +433,8 @@ type GetGroupDetailsGroup struct {
 	DisplayName  string    `json:"displayName"`
 	CreationDate time.Time `json:"creationDate"`
 	Uuid         string    `json:"uuid"`
-	Creator      string    `json:"creator"`
+	// User-defined attributes.
+	Attributes []GetGroupDetailsGroupAttributesAttributeValue `json:"attributes"`
 	// The groups to which this user belongs.
 	Users []GetGroupDetailsGroupUsersUser `json:"users"`
 }
@@ -458,11 +451,59 @@ func (v *GetGroupDetailsGroup) GetCreationDate() time.Time { return v.CreationDa
 // GetUuid returns GetGroupDetailsGroup.Uuid, and is useful for accessing the field via an interface.
 func (v *GetGroupDetailsGroup) GetUuid() string { return v.Uuid }
 
-// GetCreator returns GetGroupDetailsGroup.Creator, and is useful for accessing the field via an interface.
-func (v *GetGroupDetailsGroup) GetCreator() string { return v.Creator }
+// GetAttributes returns GetGroupDetailsGroup.Attributes, and is useful for accessing the field via an interface.
+func (v *GetGroupDetailsGroup) GetAttributes() []GetGroupDetailsGroupAttributesAttributeValue {
+	return v.Attributes
+}
 
 // GetUsers returns GetGroupDetailsGroup.Users, and is useful for accessing the field via an interface.
 func (v *GetGroupDetailsGroup) GetUsers() []GetGroupDetailsGroupUsersUser { return v.Users }
+
+// GetGroupDetailsGroupAttributesAttributeValue includes the requested fields of the GraphQL type AttributeValue.
+type GetGroupDetailsGroupAttributesAttributeValue struct {
+	Name   string                                                            `json:"name"`
+	Value  []string                                                          `json:"value"`
+	Schema GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema `json:"schema"`
+}
+
+// GetName returns GetGroupDetailsGroupAttributesAttributeValue.Name, and is useful for accessing the field via an interface.
+func (v *GetGroupDetailsGroupAttributesAttributeValue) GetName() string { return v.Name }
+
+// GetValue returns GetGroupDetailsGroupAttributesAttributeValue.Value, and is useful for accessing the field via an interface.
+func (v *GetGroupDetailsGroupAttributesAttributeValue) GetValue() []string { return v.Value }
+
+// GetSchema returns GetGroupDetailsGroupAttributesAttributeValue.Schema, and is useful for accessing the field via an interface.
+func (v *GetGroupDetailsGroupAttributesAttributeValue) GetSchema() GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema {
+	return v.Schema
+}
+
+// GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema includes the requested fields of the GraphQL type AttributeSchema.
+type GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema struct {
+	Name          string        `json:"name"`
+	AttributeType AttributeType `json:"attributeType"`
+	IsList        bool          `json:"isList"`
+	IsVisible     bool          `json:"isVisible"`
+}
+
+// GetName returns GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema.Name, and is useful for accessing the field via an interface.
+func (v *GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema) GetName() string {
+	return v.Name
+}
+
+// GetAttributeType returns GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema.AttributeType, and is useful for accessing the field via an interface.
+func (v *GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema) GetAttributeType() AttributeType {
+	return v.AttributeType
+}
+
+// GetIsList returns GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema.IsList, and is useful for accessing the field via an interface.
+func (v *GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema) GetIsList() bool {
+	return v.IsList
+}
+
+// GetIsVisible returns GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema.IsVisible, and is useful for accessing the field via an interface.
+func (v *GetGroupDetailsGroupAttributesAttributeValueSchemaAttributeSchema) GetIsVisible() bool {
+	return v.IsVisible
+}
 
 // GetGroupDetailsGroupUsersUser includes the requested fields of the GraphQL type User.
 type GetGroupDetailsGroupUsersUser struct {
@@ -492,8 +533,9 @@ func (v *GetGroupDetailsResponse) GetGroup() GetGroupDetailsGroup { return v.Gro
 type GetGroupListGroupsGroup struct {
 	Id           int       `json:"id"`
 	DisplayName  string    `json:"displayName"`
-	Creator      string    `json:"creator"`
 	CreationDate time.Time `json:"creationDate"`
+	// User-defined attributes.
+	Attributes []GetGroupListGroupsGroupAttributesAttributeValue `json:"attributes"`
 	// The groups to which this user belongs.
 	Users []GetGroupListGroupsGroupUsersUser `json:"users"`
 }
@@ -504,14 +546,62 @@ func (v *GetGroupListGroupsGroup) GetId() int { return v.Id }
 // GetDisplayName returns GetGroupListGroupsGroup.DisplayName, and is useful for accessing the field via an interface.
 func (v *GetGroupListGroupsGroup) GetDisplayName() string { return v.DisplayName }
 
-// GetCreator returns GetGroupListGroupsGroup.Creator, and is useful for accessing the field via an interface.
-func (v *GetGroupListGroupsGroup) GetCreator() string { return v.Creator }
-
 // GetCreationDate returns GetGroupListGroupsGroup.CreationDate, and is useful for accessing the field via an interface.
 func (v *GetGroupListGroupsGroup) GetCreationDate() time.Time { return v.CreationDate }
 
+// GetAttributes returns GetGroupListGroupsGroup.Attributes, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroup) GetAttributes() []GetGroupListGroupsGroupAttributesAttributeValue {
+	return v.Attributes
+}
+
 // GetUsers returns GetGroupListGroupsGroup.Users, and is useful for accessing the field via an interface.
 func (v *GetGroupListGroupsGroup) GetUsers() []GetGroupListGroupsGroupUsersUser { return v.Users }
+
+// GetGroupListGroupsGroupAttributesAttributeValue includes the requested fields of the GraphQL type AttributeValue.
+type GetGroupListGroupsGroupAttributesAttributeValue struct {
+	Name   string                                                               `json:"name"`
+	Value  []string                                                             `json:"value"`
+	Schema GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema `json:"schema"`
+}
+
+// GetName returns GetGroupListGroupsGroupAttributesAttributeValue.Name, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroupAttributesAttributeValue) GetName() string { return v.Name }
+
+// GetValue returns GetGroupListGroupsGroupAttributesAttributeValue.Value, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroupAttributesAttributeValue) GetValue() []string { return v.Value }
+
+// GetSchema returns GetGroupListGroupsGroupAttributesAttributeValue.Schema, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroupAttributesAttributeValue) GetSchema() GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema {
+	return v.Schema
+}
+
+// GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema includes the requested fields of the GraphQL type AttributeSchema.
+type GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema struct {
+	Name          string        `json:"name"`
+	AttributeType AttributeType `json:"attributeType"`
+	IsList        bool          `json:"isList"`
+	IsVisible     bool          `json:"isVisible"`
+}
+
+// GetName returns GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema.Name, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema) GetName() string {
+	return v.Name
+}
+
+// GetAttributeType returns GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema.AttributeType, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema) GetAttributeType() AttributeType {
+	return v.AttributeType
+}
+
+// GetIsList returns GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema.IsList, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema) GetIsList() bool {
+	return v.IsList
+}
+
+// GetIsVisible returns GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema.IsVisible, and is useful for accessing the field via an interface.
+func (v *GetGroupListGroupsGroupAttributesAttributeValueSchemaAttributeSchema) GetIsVisible() bool {
+	return v.IsVisible
+}
 
 // GetGroupListGroupsGroupUsersUser includes the requested fields of the GraphQL type User.
 type GetGroupListGroupsGroupUsersUser struct {
@@ -666,7 +756,6 @@ func (v *GetUserDetailsUser) GetGroups() []GetUserDetailsUserGroupsGroup { retur
 type GetUserDetailsUserGroupsGroup struct {
 	Id          int    `json:"id"`
 	DisplayName string `json:"displayName"`
-	Creator     string `json:"creator"`
 }
 
 // GetId returns GetUserDetailsUserGroupsGroup.Id, and is useful for accessing the field via an interface.
@@ -674,9 +763,6 @@ func (v *GetUserDetailsUserGroupsGroup) GetId() int { return v.Id }
 
 // GetDisplayName returns GetUserDetailsUserGroupsGroup.DisplayName, and is useful for accessing the field via an interface.
 func (v *GetUserDetailsUserGroupsGroup) GetDisplayName() string { return v.DisplayName }
-
-// GetCreator returns GetUserDetailsUserGroupsGroup.Creator, and is useful for accessing the field via an interface.
-func (v *GetUserDetailsUserGroupsGroup) GetCreator() string { return v.Creator }
 
 // GetUserLoginRecordsLoginRecordsLoginRecord includes the requested fields of the GraphQL type LoginRecord.
 type GetUserLoginRecordsLoginRecordsLoginRecord struct {
@@ -955,15 +1041,11 @@ func (v *__CreateGroupAttributeInput) GetIsVisible() bool { return v.IsVisible }
 
 // __CreateGroupInput is used internally by genqlient
 type __CreateGroupInput struct {
-	Name    string `json:"name"`
-	Creator string `json:"creator"`
+	Name string `json:"name"`
 }
 
 // GetName returns __CreateGroupInput.Name, and is useful for accessing the field via an interface.
 func (v *__CreateGroupInput) GetName() string { return v.Name }
-
-// GetCreator returns __CreateGroupInput.Creator, and is useful for accessing the field via an interface.
-func (v *__CreateGroupInput) GetCreator() string { return v.Creator }
 
 // __CreateUserAttributeInput is used internally by genqlient
 type __CreateUserAttributeInput struct {
@@ -1144,11 +1226,10 @@ func AddUserToGroup(
 
 // The query or mutation executed by CreateGroup.
 const CreateGroup_Operation = `
-mutation CreateGroup ($name: String!, $creator: String!) {
-	createGroup(name: $name, creator: $creator) {
+mutation CreateGroup ($name: String!) {
+	createGroup(name: $name) {
 		id
 		displayName
-		creator
 	}
 }
 `
@@ -1157,14 +1238,12 @@ func CreateGroup(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	name string,
-	creator string,
 ) (*CreateGroupResponse, error) {
 	req_ := &graphql.Request{
 		OpName: "CreateGroup",
 		Query:  CreateGroup_Operation,
 		Variables: &__CreateGroupInput{
-			Name:    name,
-			Creator: creator,
+			Name: name,
 		},
 	}
 	var err_ error
@@ -1489,7 +1568,16 @@ query GetGroupDetails ($id: Int!) {
 		displayName
 		creationDate
 		uuid
-		creator
+		attributes {
+			name
+			value
+			schema {
+				name
+				attributeType
+				isList
+				isVisible
+			}
+		}
 		users {
 			id
 			email
@@ -1533,7 +1621,6 @@ query GetGroupDetailsByName ($name: String!) {
 		displayName
 		creationDate
 		uuid
-		creator
 		attributes {
 			name
 			value
@@ -1585,8 +1672,17 @@ query GetGroupList {
 	groups {
 		id
 		displayName
-		creator
 		creationDate
+		attributes {
+			name
+			value
+			schema {
+				name
+				attributeType
+				isList
+				isVisible
+			}
+		}
 		users {
 			id
 			userIndex
@@ -1675,7 +1771,6 @@ query GetUserDetails ($id: String!) {
 		groups {
 			id
 			displayName
-			creator
 		}
 	}
 }
