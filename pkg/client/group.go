@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	apierrors "github.com/beclab/lldap-client/pkg/errors"
 	"github.com/beclab/lldap-client/pkg/generated"
 )
 
@@ -26,7 +27,24 @@ func (g *groups) Get(ctx context.Context, id int) (*generated.GetGroupDetailsGro
 
 func (g *groups) Create(ctx context.Context, name string, creator string) (*generated.CreateGroupCreateGroup, error) {
 	var resp *generated.CreateGroupResponse
-	resp, err := generated.CreateGroup(ctx, g.client, name, creator)
+	resp, err := generated.CreateGroup(ctx, g.client, name)
+	if err != nil {
+		return nil, err
+	}
+	err = g.CreateAttribute(ctx, "creator", generated.AttributeTypeString, false, false)
+	if err != nil && !apierrors.IsAlreadyExists(err) {
+		return nil, err
+	}
+	err = g.Update(ctx, generated.UpdateGroupInput{
+		Id:          resp.CreateGroup.Id,
+		DisplayName: resp.CreateGroup.DisplayName,
+		InsertAttributes: []generated.AttributeValueInput{
+			{
+				Name:  "creator",
+				Value: []string{creator},
+			},
+		},
+	})
 	if err != nil {
 		return nil, err
 	}
