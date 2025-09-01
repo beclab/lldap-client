@@ -3,13 +3,14 @@ package transport
 import (
 	"errors"
 	"fmt"
-	"github.com/beclab/lldap-client/pkg/auth"
-	"github.com/beclab/lldap-client/pkg/config"
-	"github.com/dgrijalva/jwt-go"
-	"golang.org/x/oauth2"
-	"k8s.io/klog/v2"
 	"net/http"
 	"time"
+
+	"github.com/beclab/lldap-client/pkg/auth"
+	"github.com/beclab/lldap-client/pkg/config"
+	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/oauth2"
+	"k8s.io/klog/v2"
 )
 
 func HTTPWrappersForConfig(cfg *config.Config, rt http.RoundTripper) (http.RoundTripper, error) {
@@ -115,15 +116,18 @@ func (rt *bearerAuthRoundTripper) tryRefreshToken() (string, error) {
 
 func getTokenExp(tokenString string) (int64, error) {
 	parser := jwt.Parser{}
-	token, _, err := parser.ParseUnverified(tokenString, &jwt.StandardClaims{})
+	token, _, err := parser.ParseUnverified(tokenString, &jwt.RegisteredClaims{})
 	if err != nil {
 		return 0, err
 	}
-	claims, ok := token.Claims.(*jwt.StandardClaims)
+	claims, ok := token.Claims.(*jwt.RegisteredClaims)
 	if !ok {
 		return 0, errors.New("invalid claims")
 	}
-	return claims.ExpiresAt, nil
+	if claims.ExpiresAt == nil {
+		return 0, errors.New("no expiration time in token")
+	}
+	return claims.ExpiresAt.Unix(), nil
 }
 
 func CloneRequest(req *http.Request) *http.Request {
